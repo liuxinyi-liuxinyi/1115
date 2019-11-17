@@ -168,6 +168,8 @@ function tb(id){
 		var index=0;//当前显示的图片序号，从0开始,范围是【0,n-1】
 		var n=btns.length;//图片及按钮数量
 		//显示指定index对应的图片
+		var t=null;
+		var s=10;
 		function showimg(index){
 			imgs.style.left=-1*index*imgwidth+'px';
 		}
@@ -198,6 +200,24 @@ function tb(id){
 			/*imgs.style.left=-1*index*imgwidth
 			 'px';*/
 		}
+		box.onmouseover=function(){
+			clearInterval(t);
+		}
+		//鼠标离开轮播图区域时，重新自动轮播
+		//鼠标离开后,每个两秒钟换一个图片
+		box.onmouseout=function(){
+			t=setInterval(arrowr.onclick,s*1000);
+		}
+		box.onmouseout();//执行一次mouseout操作，开启定时器
+		//给圆点所有做操作，设置按钮的点击事件
+		for(var i=0;i<btns.length;i++){
+			btns[i].idx=i;//记住他的序号
+			btns[i].onclick=function(){
+			  index=this.idx;//知道第几号
+				showbtn(index);//显示按钮
+				showimg(index);//显示图片
+			}
+	}
 }
 function jd(id){
 	//变成思路：指定index值，根据index值显示对应的图片并设置按钮特殊样式
